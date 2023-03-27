@@ -1,30 +1,20 @@
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
-import java.util.List;
-import java.util.Map;
-
 public class App {
     public static void main(String[] args) throws Exception {
 
-        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
-        URI endereco = URI.create(url);
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(endereco).GET().build();
-        HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-        String body = response.body();
+        String urlTopFilmes = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
 
-       JsonParser parser = new JsonParser();
+         ApiRequests.listarItensApi("Top Filmes", urlTopFilmes);
 
-        List<Map<String, String>> listaFilmes = parser.parse(body);
+        String urlTopSeries = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopTVs.json";
 
-        for (Map<String,String> filme : listaFilmes) {
-            System.out.println(filme.get("title"));
-            System.out.println(filme.get("image"));      
-            System.out.println(filme.get("imDbRating"));      
-            System.out.println("");      
-        }
+        ApiRequests.listarItensApi("Top Séries", urlTopSeries);
+
+        String urlFilmesPopulares = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/MostPopularMovies.json";
+
+        ApiRequests.listarItensApi("Filmes Mais Populares", urlFilmesPopulares);
+
+        String urlSeriesPopulares = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/MostPopularTVs.json";     
+        
+        ApiRequests.listarItensApi("Séries Mais Populares", urlSeriesPopulares);
     }
 }
