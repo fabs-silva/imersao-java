@@ -1,4 +1,6 @@
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -19,11 +21,20 @@ public class ApiRequests {
         return parser.parse(body);
   }
 
-  private static void imprimirResultados (List<Map<String, String>> listaItens){
+  private static void imprimirResultados (List<Map<String, String>> listaItens) throws Exception{
+
      for (Map<String,String> item : listaItens) {
           Integer imdbRatingRounded = Math.round(Float.parseFloat(item.get("imDbRating")));
-            System.out.println("\u001b[1mTítulo:\u001b[m " + item.get("title"));
-            System.out.println("\u001b[1mPoster: \u001b[m" + item.get("image"));      
+          String tituloFilme = item.get("title");
+          String urlImagem = item.get("image");
+          InputStream inputStream = new URL(urlImagem).openStream();
+          String nomeArquivo = "saida/" + tituloFilme + ".png";
+
+          GeradorDeFigurinhas gerador = new GeradorDeFigurinhas();
+          gerador.cria(inputStream, nomeArquivo);
+              
+            System.out.println("\u001b[1mTítulo:\u001b[m " + tituloFilme);
+            System.out.println("\u001b[1mPoster: \u001b[m" + urlImagem);      
             System.out.println("\u001b[1m \u001b[40m \u001b[32m Classificação: " + item.get("imDbRating" ) + "\u001b[m");
             for (int index = 0; index < imdbRatingRounded; index++) {
               System.out.printf("⭐");
