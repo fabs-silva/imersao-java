@@ -21,9 +21,13 @@ public class ApiRequests {
 
   private static void imprimirResultados (List<Map<String, String>> listaItens){
      for (Map<String,String> item : listaItens) {
-            System.out.println("Título: " + item.get("title"));
-            System.out.println("Poster: " + item.get("image"));      
-            System.out.println("Classificação: " + item.get("imDbRating"));      
+          Integer imdbRatingRounded = Math.round(Float.parseFloat(item.get("imDbRating")));
+            System.out.println("\u001b[1mTítulo:\u001b[m " + item.get("title"));
+            System.out.println("\u001b[1mPoster: \u001b[m" + item.get("image"));      
+            System.out.println("\u001b[1m \u001b[40m \u001b[32m Classificação: " + item.get("imDbRating" ) + "\u001b[m");
+            for (int index = 0; index < imdbRatingRounded; index++) {
+              System.out.printf("⭐");
+            }
             System.out.println("");      
         }
   }
