@@ -28,7 +28,7 @@ public class ApiRequests {
           String tituloFilme = item.get("title");
           String urlImagem = item.get("image");
           InputStream inputStream = new URL(urlImagem).openStream();
-          String nomeArquivo = "saida/" + tituloFilme + ".png";
+          String nomeArquivo = "saida/" + tituloFilme.replaceAll("[^a-zA-Z0-9]" , "") + ".png";
 
           GeradorDeFigurinhas gerador = new GeradorDeFigurinhas();
           gerador.cria(inputStream, nomeArquivo);
